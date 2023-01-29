@@ -7,16 +7,16 @@ public enum TipoSaudacao {
     BOA_TARDE("Boa Tarde", IntStream.range(12, 17).toArray()),
     BOA_NOITE("Boa Noite", IntStream.concat(IntStream.range(18, 23), IntStream.range(0, 5)).toArray());
 
-    private final String valor;
+    private final String descricao;
     private final int[] horas;
 
-    TipoSaudacao(String valor, int[] horas) {
-        this.valor = valor;
+    TipoSaudacao(String descricao, int[] horas) {
+        this.descricao = descricao;
         this.horas = horas;
     }
 
-    public String getValor() {
-        return valor;
+    public String getDescricao() {
+        return descricao;
     }
 
     public int[] getHoras() {

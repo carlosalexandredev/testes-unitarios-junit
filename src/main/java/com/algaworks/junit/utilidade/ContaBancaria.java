@@ -1,12 +1,19 @@
 package com.algaworks.junit.utilidade;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class ContaBancaria {
 
+    private final BigDecimal saldo;
+
+    //TODO 1 - validar saldo: não pode ser nulo, caso seja, deve lançar uma IllegalArgumentException
+    //TODO 2 - pode ser zero ou negativo
     public ContaBancaria(BigDecimal saldo) {
-        //TODO 1 - validar saldo: não pode ser nulo, caso seja, deve lançar uma IllegalArgumentException
-        //TODO 2 - pode ser zero ou negativo
+        if (Objects.isNull(saldo)) {
+            throw new IllegalArgumentException("Valor do saldo não pode ser nulo");
+        }
+        this.saldo = saldo;
     }
 
     public void saque(BigDecimal valor) {
@@ -20,8 +27,8 @@ public class ContaBancaria {
         //TODO 2 - Deve adicionar o valor ao saldo
     }
 
+    //TODO 1 - retornar saldo
     public BigDecimal saldo() {
-        //TODO 1 - retornar saldo
-        return null;
+        return this.saldo;
     }
 }

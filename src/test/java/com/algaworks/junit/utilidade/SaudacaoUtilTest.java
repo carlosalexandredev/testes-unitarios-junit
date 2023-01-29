@@ -15,7 +15,7 @@ class SaudacaoUtilTest {
     public void saudarBomdia() {
         for (int hora : TipoSaudacao.BOM_DIA.getHoras()) {
             String saudacao = SaudacaoUtil.saudar(hora);
-            assertEquals("Bom dia", saudacao, String.format("Saudacao incorreta | HORA: %s", hora));
+            assertEquals(TipoSaudacao.BOM_DIA.getDescricao(), saudacao, String.format("Saudacao incorreta | HORA: %s", hora));
         }
     }
 
