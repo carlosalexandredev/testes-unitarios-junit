@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * o nome exibido é gerado substituindo os sublinhados (_) por espaços na string do nome do método. Esta anotação é útil quando você deseja que os nomes de teste exibidos sejam mais legíveis para humanos.
  */
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class CadastroEditorTest {
+class CadastroEditorStubTest {
 
     CadastroEditor cadastroEditor;
     ArmazenamentoEditorEmMemoria armazenamentoEditor;
