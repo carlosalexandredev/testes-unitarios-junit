@@ -25,6 +25,16 @@ class CadastroEditorMockitoTest {
     CadastroEditor cadastroEditor;
     Editor editor;
 
+
+    /**
+     * A biblioteca Mockito é usada para criar objetos simulados que imitam o comportamento de objetos reais.
+     * Isso é útil para testar a classe CadastroEditor sem precisar depender das implementações reais das classes ArmazenamentoEditor e GerenciadorEnvioEmail.
+     * <p>
+     * O método when é usado para configurar o comportamento do mock armazenamentoEditor,
+     * fazendo com que o método salvar retorne um objeto Editor específico.
+     * Em seguida, o mock armazenamentoEditor é passado como argumento para a criação de uma nova instância da classe CadastroEditor.
+     */
+    
     @BeforeEach
     public void init() {
         editor = new Editor(null, "Alex", "alex@gmail.com", BigDecimal.TEN, true);
