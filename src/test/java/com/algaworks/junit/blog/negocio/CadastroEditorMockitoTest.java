@@ -63,4 +63,11 @@ class CadastroEditorMockitoTest {
         Editor editorsalvo = cadastroEditor.criar(editor);
         assertEquals(1L, editorsalvo.getId());
     }
+
+    @Test
+    public void Dados_editor_valido_deve_chamar_metodo_saldo_do_armazenamento() {
+        cadastroEditor.criar(editor);
+        Mockito.verify(armazenamentoEditor, Mockito.times(1))
+                .salvar(Mockito.eq(editor));
+    }
 }
