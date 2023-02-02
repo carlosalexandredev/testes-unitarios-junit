@@ -8,23 +8,34 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class) é uma anotação do JUnit 5,
+ * A @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class) é uma anotação do JUnit 5,
  * usada para personalizar a exibição de nomes de testes em relação ao nome do método de teste. Quando a anotação é aplicada a um método de teste,
  * o nome exibido é gerado substituindo os sublinhados (_) por espaços na string do nome do método. Esta anotação é útil quando você deseja que os nomes de teste exibidos sejam mais legíveis para humanos.
  */
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@ExtendWith(MockitoExtension.class)
 class CadastroEditorMockitoTest {
-
-    CadastroEditor cadastroEditor;
     Editor editor;
 
+    @Mock
+    ArmazenamentoEditor armazenamentoEditor;
+    @Mock
+    GerenciadorEnvioEmail gerenciadorEnvioEmail;
+
+    @InjectMocks
+    CadastroEditor cadastroEditor;
 
     /**
      * A biblioteca Mockito é usada para criar objetos simulados que imitam o comportamento de objetos reais.
@@ -34,17 +45,16 @@ class CadastroEditorMockitoTest {
      * fazendo com que o método salvar retorne um objeto Editor específico.
      * Em seguida, o mock armazenamentoEditor é passado como argumento para a criação de uma nova instância da classe CadastroEditor.
      */
-    
+
     @BeforeEach
     public void init() {
         editor = new Editor(null, "Alex", "alex@gmail.com", BigDecimal.TEN, true);
-
-        ArmazenamentoEditor armazenamentoEditor = Mockito.mock(ArmazenamentoEditor.class);
-        Mockito.when(armazenamentoEditor.salvar(editor))
-                .thenReturn(new Editor(1L, "Alex", "alex@gmail.com", BigDecimal.TEN, true));
-
-        GerenciadorEnvioEmail gerenciadorEnvioEmail = Mockito.mock(GerenciadorEnvioEmail.class);
-
+        Mockito.when(armazenamentoEditor.salvar(Mockito.any(Editor.class)))
+                .thenAnswer(invocacao -> {
+                    Editor editorPassado = invocacao.getArgument(0, Editor.class);
+                    editorPassado.setId(1L);
+                    return editorPassado;
+                });
         cadastroEditor = new CadastroEditor(armazenamentoEditor, gerenciadorEnvioEmail);
     }
 
