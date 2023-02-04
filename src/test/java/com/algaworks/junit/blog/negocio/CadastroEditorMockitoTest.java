@@ -11,6 +11,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -95,5 +96,16 @@ class CadastroEditorMockitoTest {
     public void Dado_um_editor_valido_quando_cadastrar_entao_deve_verificar_o_email() {
         cadastroEditor.criar(editor);
         Mockito.verify(editor, Mockito.atLeast(1)).getEmail();
+    }
+
+    @Test
+    public void Dado_um_editor_com_email_existente_logo_deve_lancar_exception() {
+        Mockito.when(armazenamentoEditor.encontrarPorEmail("alex@gmail.com"))
+                .thenReturn(Optional.empty())
+                .thenReturn(Optional.of(editor));
+        Editor editorComEmailExistente = criaEditor();
+        cadastroEditor.criar(editor);
+        assertThrows(RegraNegocioException.class,
+                () -> cadastroEditor.criar(editorComEmailExistente));
     }
 }
