@@ -6,9 +6,7 @@ import com.algaworks.junit.blog.modelo.Editor;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -28,11 +26,15 @@ class CadastroEditorMockitoTest {
 
     @Mock
     ArmazenamentoEditor armazenamentoEditor;
+
     @Mock
     GerenciadorEnvioEmail gerenciadorEnvioEmail;
 
     @InjectMocks
     CadastroEditor cadastroEditor;
+
+    @Captor
+    ArgumentCaptor<Mensagem> mensagemArgumentCaptor;
 
     /**
      * A biblioteca Mockito é usada para criar objetos simulados que imitam o comportamento de objetos reais.
@@ -74,5 +76,13 @@ class CadastroEditorMockitoTest {
         assertAll("Não deve enviar e-mail, quando lançar Exception do armazenamento",
                 () -> assertThrows(RuntimeException.class, () -> cadastroEditor.criar(editor)),
                 () -> Mockito.verify(gerenciadorEnvioEmail, Mockito.never()).enviarEmail(Mockito.any()));
+    }
+
+    @Test
+    public void Dado_editor_valido_qunado_cadastrar_entao_deve_enviar_email_com_destinario_destino_ao_editor() {
+        Editor editoSalvo = cadastroEditor.criar(editor);
+        Mockito.verify(gerenciadorEnvioEmail).enviarEmail(mensagemArgumentCaptor.capture());
+        Mensagem mensagem = mensagemArgumentCaptor.getValue();
+        assertEquals(editoSalvo.getEmail(), mensagem.getDestinatario());
     }
 }
