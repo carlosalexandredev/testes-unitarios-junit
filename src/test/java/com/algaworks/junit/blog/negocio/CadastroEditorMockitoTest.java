@@ -22,7 +22,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @ExtendWith(MockitoExtension.class)
 class CadastroEditorMockitoTest {
-    Editor editor;
+
+    @Spy
+    Editor editor = criaEditor();
 
     @Mock
     ArmazenamentoEditor armazenamentoEditor;
@@ -45,9 +47,12 @@ class CadastroEditorMockitoTest {
      * Em seguida, o mock armazenamentoEditor é passado como argumento para a criação de uma nova instância da classe CadastroEditor.
      */
 
+    private static Editor criaEditor() {
+        return new Editor(null, "Alex", "alex@gmail.com", BigDecimal.TEN, true);
+    }
+
     @BeforeEach
     public void init() {
-        editor = new Editor(null, "Alex", "alex@gmail.com", BigDecimal.TEN, true);
         Mockito.when(armazenamentoEditor.salvar(Mockito.any(Editor.class)))
                 .thenAnswer(invocacao -> {
                     Editor editorPassado = invocacao.getArgument(0, Editor.class);
@@ -84,5 +89,11 @@ class CadastroEditorMockitoTest {
         Mockito.verify(gerenciadorEnvioEmail).enviarEmail(mensagemArgumentCaptor.capture());
         Mensagem mensagem = mensagemArgumentCaptor.getValue();
         assertEquals(editoSalvo.getEmail(), mensagem.getDestinatario());
+    }
+
+    @Test
+    public void Dado_um_editor_valido_quando_cadastrar_entao_deve_verificar_o_email() {
+        cadastroEditor.criar(editor);
+        Mockito.verify(editor, Mockito.atLeast(1)).getEmail();
     }
 }
