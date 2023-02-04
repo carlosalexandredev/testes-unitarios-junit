@@ -3,10 +3,7 @@ package com.algaworks.junit.blog.negocio;
 import com.algaworks.junit.blog.armazenamento.ArmazenamentoEditor;
 import com.algaworks.junit.blog.exception.RegraNegocioException;
 import com.algaworks.junit.blog.modelo.Editor;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -69,5 +66,12 @@ class CadastroEditorMockitoTest {
         cadastroEditor.criar(editor);
         Mockito.verify(armazenamentoEditor, Mockito.times(1))
                 .salvar(Mockito.eq(editor));
+    }
+
+    @Test
+    public void Dados_editor_valido_ao_criar_excessao_ao_salvar_nao_enviar_email() {
+        Mockito.when(armazenamentoEditor.salvar(editor)).thenThrow(new RuntimeException());
+        assertThrows(RuntimeException.class, () -> cadastroEditor.criar(editor));
+        Mockito.verify(gerenciadorEnvioEmail, Mockito.never()).enviarEmail(Mockito.any());
     }
 }
