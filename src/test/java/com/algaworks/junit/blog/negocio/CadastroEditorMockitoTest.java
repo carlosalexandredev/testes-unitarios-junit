@@ -1,6 +1,7 @@
 package com.algaworks.junit.blog.negocio;
 
 import com.algaworks.junit.blog.armazenamento.ArmazenamentoEditor;
+import com.algaworks.junit.blog.exception.EditorNaoEncontradoException;
 import com.algaworks.junit.blog.exception.RegraNegocioException;
 import com.algaworks.junit.blog.modelo.Editor;
 import org.junit.jupiter.api.*;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
  * A @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class) é uma anotação do JUnit 5,
@@ -23,9 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @ExtendWith(MockitoExtension.class)
 class CadastroEditorMockitoTest {
-
-    @Spy
-    Editor editor = criaEditor();
 
     @Mock
     ArmazenamentoEditor armazenamentoEditor;
@@ -45,6 +44,9 @@ class CadastroEditorMockitoTest {
 
     @Nested
     class CadastroComEditorValido {
+
+        @Spy
+        Editor editor = criaEditor();
 
         /**
          * A biblioteca Mockito é usada para criar objetos simulados que imitam o comportamento de objetos reais.
@@ -74,7 +76,7 @@ class CadastroEditorMockitoTest {
         @Test
         public void Dados_editor_valido_deve_chamar_metodo_saldo_do_armazenamento() {
             cadastroEditor.criar(editor);
-            Mockito.verify(armazenamentoEditor, Mockito.times(1))
+            Mockito.verify(armazenamentoEditor, times(1))
                     .salvar(Mockito.eq(editor));
         }
 
@@ -115,8 +117,8 @@ class CadastroEditorMockitoTest {
         public void Dado_editor_valido_quando_cadastar_entao_deve_enviar_email_apos_salvar() {
             cadastroEditor.criar(editor);
             InOrder inOrder = Mockito.inOrder(armazenamentoEditor, gerenciadorEnvioEmail);
-            inOrder.verify(armazenamentoEditor, Mockito.times(1)).salvar(editor);
-            inOrder.verify(gerenciadorEnvioEmail, Mockito.times(1)).enviarEmail(Mockito.any(Mensagem.class));
+            inOrder.verify(armazenamentoEditor, times(1)).salvar(editor);
+            inOrder.verify(gerenciadorEnvioEmail, times(1)).enviarEmail(Mockito.any(Mensagem.class));
         }
     }
 
@@ -130,4 +132,44 @@ class CadastroEditorMockitoTest {
         }
     }
 
+    @Nested
+    class EdicaoComEditorValido {
+        @Spy
+        Editor editor = criaEditor();
+
+        @BeforeEach
+        public void init() {
+            Mockito.when(armazenamentoEditor.salvar(editor)).thenAnswer(invocaca -> invocaca.getArgument(0, Editor.class));
+            Mockito.when(armazenamentoEditor.encontrarPorId(1L)).thenReturn(Optional.of(editor));
+        }
+
+        @Test
+        public void Dado_editor_valido_quando_entao_deve_alterar_editor_salvo() {
+            Editor editorAtualizado = new Editor(1L, "Alex Silva", "alex.silva@gmail.com", BigDecimal.ZERO, false);
+            cadastroEditor.editar(editorAtualizado);
+
+            Mockito.verify(editor, times(1)).atualizarComDados(editorAtualizado);
+
+            InOrder inOrder = Mockito.inOrder(editor, armazenamentoEditor);
+            inOrder.verify(editor).atualizarComDados(editorAtualizado);
+            inOrder.verify(armazenamentoEditor).salvar(editor);
+        }
+    }
+
+    @Nested
+    class EdicaoComEditorInexistente {
+        Editor editor = new Editor(99L, "Alex Silva", "alex.silva@gmail.com", BigDecimal.ZERO, false);
+
+
+        @BeforeEach
+        public void init() {
+            Mockito.when(armazenamentoEditor.encontrarPorId(99L)).thenReturn(Optional.empty());
+        }
+
+        @Test
+        public void Dado_editor_que_nao_existe_quando_editar_entao_deve_lancar_exception() {
+            assertThrows(EditorNaoEncontradoException.class, () -> cadastroEditor.editar(editor));
+            verify(armazenamentoEditor, never()).salvar(Mockito.any(Editor.class));
+        }
+    }
 }
