@@ -39,7 +39,7 @@ class CadastroEditorMockitoTest {
     ArgumentCaptor<Mensagem> mensagemArgumentCaptor;
 
     private static Editor criaEditor() {
-        return EditorTestData.umEditorNovo();
+        return EditorTestData.umEditorNovo().build();
     }
 
     @Nested
@@ -145,9 +145,11 @@ class CadastroEditorMockitoTest {
 
         @Test
         public void Dado_editor_valido_quando_entao_deve_alterar_editor_salvo() {
-            Editor editorAtualizado = EditorTestData.umEditorExistente();
-            editorAtualizado.setEmail("alex.silva@email.com");
-            editorAtualizado.setNome("Alex Silva");
+            Editor editorAtualizado = EditorTestData.umEditorExistente()
+                    .nome("Alex Silva")
+                    .email("alex.silva@email.com")
+                    .build();
+
             cadastroEditor.editar(editorAtualizado);
 
             Mockito.verify(editor, times(1)).atualizarComDados(editorAtualizado);
@@ -160,7 +162,7 @@ class CadastroEditorMockitoTest {
 
     @Nested
     class EdicaoComEditorInexistente {
-        Editor editor = EditorTestData.umEditorComIdInexistente();
+        Editor editor = EditorTestData.umEditorComIdInexistente().build();
 
         @BeforeEach
         public void init() {

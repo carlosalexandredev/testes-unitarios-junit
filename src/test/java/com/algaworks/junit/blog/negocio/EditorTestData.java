@@ -9,15 +9,22 @@ public class EditorTestData {
     private EditorTestData() {
     }
 
-    public static Editor umEditorNovo() {
-        return new Editor(null, "Alex Silva", "alex@gmail.com", BigDecimal.ZERO, false);
+    public static Editor.Builder umEditorNovo() {
+        return Editor.builder()
+                .nome("Alex Silva")
+                .email("alex@gmail.com")
+                .valorPagoPorPalavra(BigDecimal.ZERO)
+                .premium(false);
     }
 
-    public static Editor umEditorExistente() {
-        return new Editor(1L, "Alex Silva", "alex.silva@gmail.com", BigDecimal.ZERO, false);
+    public static Editor.Builder umEditorExistente() {
+        return umEditorNovo().id(1L);
     }
 
-    public static Editor umEditorComIdInexistente() {
-        return new Editor(99L, "Alex Silva", "alex.silva@gmail.com", BigDecimal.ZERO, false);
+    public static Editor.Builder umEditorComIdInexistente() {
+        return umEditorNovo()
+                .id(99L)
+                .email("alex.silva@gmail.com")
+                .premium(false);
     }
 }
