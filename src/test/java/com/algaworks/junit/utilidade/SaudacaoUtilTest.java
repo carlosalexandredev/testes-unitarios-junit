@@ -1,6 +1,10 @@
 package com.algaworks.junit.utilidade;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -48,5 +52,12 @@ class SaudacaoUtilTest {
     @Test
     public void naoDeveLancarException() {
         assertDoesNotThrow(() -> SaudacaoUtil.saudar(0));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {5, 6, 7, 8, 9, 10, 11})
+    public void Dado_horario_matinal_quando_saudar_entao_deve_retornar_bom_dia(int hora) {
+        String saudacao = SaudacaoUtil.saudar(hora);
+        assertEquals(TipoSaudacao.BOM_DIA.getDescricao(), saudacao, String.format("Saudacao incorreta | HORA: %s", hora));
     }
 }
