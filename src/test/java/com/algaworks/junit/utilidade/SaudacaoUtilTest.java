@@ -1,5 +1,6 @@
 package com.algaworks.junit.utilidade;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("Testes no utilitário de saudação")
 class SaudacaoUtilTest {
 
     /**
@@ -20,6 +22,7 @@ class SaudacaoUtilTest {
      * Podemos usar este método, por exemplo, para garantir que o resultado de uma operação matemática seja o esperado.
      */
     @Test
+    @DisplayName("Deve saudar com 'Bom dia'")
     public void saudarBomdia() {
         for (int hora : TipoSaudacao.BOM_DIA.getHoras()) {
             String saudacao = saudar(hora);
@@ -28,6 +31,7 @@ class SaudacaoUtilTest {
     }
 
     @Test
+    @DisplayName("Deve saudar com 'Boa tarde'")
     public void saudarBoaTarde() {
         for (int hora : TipoSaudacao.BOA_TARDE.getHoras()) {
             String saudacao = saudar(hora);
@@ -36,6 +40,7 @@ class SaudacaoUtilTest {
     }
 
     @Test
+    @DisplayName("Deve saudar com 'Boa noite'")
     public void saudarBoaNoite() {
         for (int hora : TipoSaudacao.BOA_NOITE.getHoras()) {
             String saudacao = saudar(hora);
