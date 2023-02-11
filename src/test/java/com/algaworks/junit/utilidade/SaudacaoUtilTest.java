@@ -1,5 +1,6 @@
 package com.algaworks.junit.utilidade;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -19,7 +20,7 @@ class SaudacaoUtilTest {
     public void saudarBomdia() {
         for (int hora : TipoSaudacao.BOM_DIA.getHoras()) {
             String saudacao = SaudacaoUtil.saudar(hora);
-            assertEquals(TipoSaudacao.BOM_DIA.getDescricao(), saudacao, String.format("Saudacao incorreta | HORA: %s", hora));
+            Assertions.assertThat(saudacao).isEqualTo(TipoSaudacao.BOM_DIA.getDescricao());
         }
     }
 
