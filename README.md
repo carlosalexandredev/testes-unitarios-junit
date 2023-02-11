@@ -34,11 +34,33 @@ O princípio **FIRST** é um conjunto de boas práticas para escrever testes uni
 - **TIMELY:** os testes devem ser escritos ao mesmo tempo que o código é escrito, para que possam ser usados para
   validar as mudanças no código.
 
+## Behavior-Driven Development (BDD)
+
+BDD significa "Desenvolvimento Orientado a Comportamento" (Behavior-Driven Development, em inglês). É uma abordagem para
+o desenvolvimento de software que se concentra na entrega de valor para o negócio e nas expectativas dos usuários, em
+vez de se concentrar apenas em funcionalidades técnicas. BDD é uma evolução do TDD (Test-Driven Development) e se
+concentra em descrever o comportamento esperado do software antes da implementação.
+
+O BDD utiliza uma linguagem natural para descrever os comportamentos do sistema, de forma a tornar o processo de
+desenvolvimento mais colaborativo e compreensível para todas as partes interessadas, incluindo desenvolvedores, testers,
+gerentes de produto e stakeholders. O processo de BDD começa com uma discussão sobre o comportamento desejado do
+software, seguida da escrita de casos de teste para validar esse comportamento. Em seguida, os desenvolvedores
+implementam o software para atender a esses casos de teste, e os testes são executados para validar se o software
+corresponde ao comportamento esperado.
+
+O objetivo do BDD é assegurar que o software atenda aos requisitos do negócio e as expectativas dos usuários, ao mesmo
+tempo em que garante que o software seja testável e confiável. Isso ajuda a evitar o desperdício de tempo e recursos em
+funcionalidades que não são realmente valiosas para o negócio ou para os usuários.
+
+No Java, a implementação do padrão de nomenclatura BDD pode ser realizada usando frameworks de teste BDD, como o
+JBehave, Cucumber ou Spek. Esses frameworks permitem escrever casos de teste BDD em linguagem natural e depois mapear
+esses casos de teste para implementações em Java.
+
 ## JUnit
 
 JUnit é uma biblioteca de testes unitários para Java. Ele permite escrever testes automatizados para verificar se o
 código está funcionando corretamente. Os testes escritos com JUnit seguem uma estrutura padrão que inclui a anotação *
-*@Test** para indicar que um método é um teste, e as asserções para verificar se o resultado esperado é igual ao
+*@Test* para indicar que um método é um teste, e as asserções para verificar se o resultado esperado é igual ao
 resultado atual. JUnit também oferece recursos adicionais, como suporte para testes de tempo limite, testes de exceção e
 testes parametrizados. Ele é amplamente utilizado em desenvolvimento de software para garantir a qualidade do código e
 facilitar o processo de manutenção.
