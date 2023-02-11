@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.stream.IntStream;
-
+import static com.algaworks.junit.utilidade.SaudacaoUtilConditions.igualBomDia;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SaudacaoUtilTest {
@@ -20,11 +20,7 @@ class SaudacaoUtilTest {
     public void saudarBomdia() {
         for (int hora : TipoSaudacao.BOM_DIA.getHoras()) {
             String saudacao = SaudacaoUtil.saudar(hora);
-            String saudacaoEsperada = TipoSaudacao.BOM_DIA.getDescricao();
-            Assertions.assertThat(saudacao)
-                    .as("Validando se a saudacão correta é %s", saudacaoEsperada)
-                    .withFailMessage("Erro: Saudação incorreta! Resultado: %s", saudacao)
-                    .isEqualTo(saudacaoEsperada);
+            assertThat(saudacao).is(igualBomDia());
         }
     }
 
