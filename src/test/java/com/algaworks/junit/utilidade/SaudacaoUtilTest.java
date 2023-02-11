@@ -20,7 +20,11 @@ class SaudacaoUtilTest {
     public void saudarBomdia() {
         for (int hora : TipoSaudacao.BOM_DIA.getHoras()) {
             String saudacao = SaudacaoUtil.saudar(hora);
-            Assertions.assertThat(saudacao).isEqualTo(TipoSaudacao.BOM_DIA.getDescricao());
+            String saudacaoEsperada = TipoSaudacao.BOM_DIA.getDescricao();
+            Assertions.assertThat(saudacao)
+                    .as("Validando se a saudacão correta é %s", saudacaoEsperada)
+                    .withFailMessage("Erro: Saudação incorreta! Resultado: %s", saudacao)
+                    .isEqualTo(saudacaoEsperada);
         }
     }
 
