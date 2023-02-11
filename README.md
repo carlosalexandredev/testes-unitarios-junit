@@ -64,4 +64,24 @@ na cobertura de testes, o que pode ser útil na identificação de bugs e no aum
 JaCoCo também pode ser usado como uma medida de qualidade do software, já que altos níveis de cobertura de testes
 geralmente indicam um software de alta qualidade.
 
+![JACOCO.png](/JACOCO.png)
+
 **Documentação:** [JaCoCo](https://www.jacoco.org/jacoco/trunk/index.html)
+
+## AssertJ
+
+AssertJ é uma biblioteca Java para testes de unidade que fornece uma sintaxe fluente e fácil de usar para escrever
+testes. Ele foi projetado para ajudar a tornar os testes mais claros, legíveis e fáceis de entender, melhorando assim a
+qualidade e a manutenibilidade do seu código.
+
+Algumas das principais vantagens de usar o AssertJ incluem:
+
+- Sintaxe clara e legível: a sintaxe fluente do AssertJ ajuda a tornar os testes mais legíveis e fáceis de entender,
+  especialmente em equipes com muitos desenvolvedores.
+
+- Suporte a vários tipos de dados: o AssertJ fornece suporte a vários tipos de dados, incluindo primitivos, objetos,
+  matrizes, coleções e muito mais. Isso significa que você pode escrever testes que verifiquem a igualdade, a ordem, a
+  presença ou a ausência de elementos e outras propriedades importantes.
+
+- Ferramentas para testar exceções: o AssertJ oferece ferramentas fáceis de usar para testar exceções, garantindo que
+  suas classes lancem as exceções corretas em situações específicas.
