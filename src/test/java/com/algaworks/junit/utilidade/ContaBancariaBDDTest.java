@@ -103,7 +103,7 @@ class ContaBancariaBDDTest {
     }
 
     @Nested
-    @DisplayName("Quando efetuar um deposito de R$8,00")
+    @DisplayName("Quando efetuar um deposito de R$ 8,00")
     class DepositoComOitoReais {
 
         private ContaBancaria contaBancaria;
