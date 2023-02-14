@@ -38,20 +38,24 @@ public class CarrinhoCompra {
 	// Quantidade não pode ser menor que 1
 	// Deve incrementar a quantidade caso o produto já exista
 	public void adicionarProduto(Produto produto, int quantidade) {
-		verificaParametrosNulos(produto);
+		verificaProdutoNulo(produto);
 		if (quantidade < 1)
 			throw new RegraNegocioException("Quantidade não pode ser menor que 1");
 
-		itens.stream()
-				.filter(prod -> prod.equals(produto))
-				.forEach(prod -> prod.adicionarQuantidade(1));
+		Optional<ItemCarrinhoCompra> itemExistente = itens.stream().filter(item -> item.getProduto().equals(produto)).findFirst();
+
+		if (itemExistente.isPresent()) {
+			itemExistente.get().adicionarQuantidade(quantidade);
+		} else {
+			itens.add(new ItemCarrinhoCompra(produto, quantidade));
+		}
 	}
 
 	// Parâmetro não pode ser nulo, deve retornar uma exception
 	// Caso o produto não exista, deve retornar uma exception
 	// Deve remover o produto independente da quantidade
 	public void removerProduto(Produto produto) {
-		verificaParametrosNulos(produto);
+		verificaProdutoNulo(produto);
 		verificaSeProdutoExiste(produto);
 		itens.removeIf(prod -> prod.equals(produto));
 	}
@@ -61,7 +65,7 @@ public class CarrinhoCompra {
 	// Caso o produto não exista, deve retornar uma exception
 	// Deve aumentar em um quantidade do produto
 	public void aumentarQuantidadeProduto(Produto produto) {
-		verificaParametrosNulos(produto);
+		verificaProdutoNulo(produto);
 		verificaSeProdutoExiste(produto);
 
 		itens.stream()
@@ -74,7 +78,7 @@ public class CarrinhoCompra {
 	// Caso o produto não exista, deve retornar uma exception
 	// Deve diminuir em um quantidade do produto, caso tenha apenas um produto, deve remover da lista
 	public void diminuirQuantidadeProduto(Produto produto) {
-		verificaParametrosNulos(produto);
+		verificaProdutoNulo(produto);
 		verificaSeProdutoExiste(produto);
 		itens.stream().filter(prod -> prod.equals(produto))
 				.forEach(prod -> prod.subtrairQuantidade(1));
@@ -104,7 +108,7 @@ public class CarrinhoCompra {
 		return Objects.equals(itens, that.itens) && Objects.equals(cliente, that.cliente);
 	}
 
-	private static void verificaParametrosNulos(Produto produto) {
+	private static void verificaProdutoNulo(Produto produto) {
 		if (Objects.isNull(produto))
 			throw new RegraNegocioException("Parâmetros não podem ser nulos");
 	}
