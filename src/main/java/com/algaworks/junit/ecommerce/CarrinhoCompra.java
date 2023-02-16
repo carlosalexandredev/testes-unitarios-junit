@@ -110,12 +110,12 @@ public class CarrinhoCompra {
 
 	private static void verificaProdutoNulo(Produto produto) {
 		if (Objects.isNull(produto))
-			throw new RegraNegocioException("Parâmetros não podem ser nulos");
+			throw new RegraNegocioException("Produto não pode ser nulo");
 	}
 
 	private void verificaSeProdutoExiste(Produto produto) {
-		if (!itens.contains(produto)) {
-			throw new RegraNegocioException("Produto não existe");
+		if (itens.stream().map(ItemCarrinhoCompra::getProduto).noneMatch(produto::equals)) {
+			throw new RegraNegocioException(String.format("O produto com o ID %d não está presente na lista de itens.", produto.getId()));
 		}
 	}
 
