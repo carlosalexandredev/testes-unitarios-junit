@@ -69,14 +69,13 @@ public class CarrinhoCompra {
 		verificaSeProdutoExiste(produto);
 
 		itens.stream()
-				.filter(prod -> prod.equals(produto))
-				.forEach(prod -> prod.adicionarQuantidade(1));
-
+				.filter(item -> item.getProduto().equals(produto))
+				.forEach(item -> item.adicionarQuantidade(1));
 	}
 
 	// Parâmetro não pode ser nulo, deve retornar uma exception
 	// Caso o produto não exista, deve retornar uma exception
-	// Deve diminuir em um quantidade do produto, caso tenha apenas um produto, deve remover da lista
+	// Deve diminuir a quantidade do produto, caso tenha apenas um produto, deve remover da lista
 	public void diminuirQuantidadeProduto(Produto produto) {
 		verificaProdutoNulo(produto);
 		verificaSeProdutoExiste(produto);
@@ -90,7 +89,7 @@ public class CarrinhoCompra {
 	}
 
 	// Retorna quantidade total de itens no carrinho
-	// Exemplo em um carrinho com 2 itens, com a quantidade 2 e 3 para cada item respectivamente, deve retornar 5
+	// Exemplo um carrinho com 2 itens, com a quantidade 2 e 3 para cada item respectivamente, deve retornar 5
 	public int getQuantidadeTotalDeProdutos() {
 		return itens.stream().map(ItemCarrinhoCompra::getQuantidade).reduce(0, Integer::sum);
 	}
