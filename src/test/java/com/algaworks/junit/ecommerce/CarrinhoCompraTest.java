@@ -15,6 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class CarrinhoCompraTest {
     Cliente cliente = new Cliente(1L, "Carlos Alexandre");
     CarrinhoCompra carrinhoCompra = new CarrinhoCompra(cliente);
+    
+    final String MSG_PRODUTO_NULO = "Produto não pode ser nulo";
+    final String MSG_QUANTIDADE_INVALIDA = "Quantidade não pode ser menor que 1";
+    final String MSG_PRODUTO_NAO_ENCONTRADO = "O produto com o ID %d não está presente na lista de itens.";
 
     @Nested
     @DisplayName("Adição de produto no carrinho:")
@@ -33,14 +37,14 @@ class CarrinhoCompraTest {
         @DisplayName("Dado produto nulo ao adicionar no carrinho de compras, Então deve retornar uma excessão")
         void produtoNuloDeveRetornarExcessao() {
             RegraNegocioException exception = assertThrows(RegraNegocioException.class, () -> carrinhoCompra.adicionarProduto(null, 1));
-            assertEquals("Produto não pode ser nulo", exception.getMessage());
+            assertEquals(MSG_PRODUTO_NULO, exception.getMessage());
         }
 
         @Test
         @DisplayName("Dado uma quantidade de produto menor que 1 ao adicionar no carrinho de compras, Então deve retornar uma excessão")
         void quantidadeProdutoMenorQueUmRetornarExcessao() {
             RegraNegocioException exception = assertThrows(RegraNegocioException.class, () -> carrinhoCompra.adicionarProduto(produto, -2));
-            assertEquals("Quantidade não pode ser menor que 1", exception.getMessage());
+            assertEquals(MSG_QUANTIDADE_INVALIDA, exception.getMessage());
         }
 
         @Test
@@ -88,7 +92,7 @@ class CarrinhoCompraTest {
         @DisplayName("Dado produto nulo ao remover do carrinho de compras, Então deve retornar uma excessão")
         void produtoNuloDeveRetornarExcessao() {
             RegraNegocioException exception = assertThrows(RegraNegocioException.class, () -> carrinhoCompra.removerProduto(null));
-            assertEquals("Produto não pode ser nulo", exception.getMessage());
+            assertEquals(MSG_PRODUTO_NULO, exception.getMessage());
         }
 
         @Test
@@ -96,7 +100,7 @@ class CarrinhoCompraTest {
         void produtoNaoExistenteRetornarExcesao() {
             Produto produtoNovo = new Produto(2L, "Teclado", "Teclado mecânido com Led", new BigDecimal(200));
             RegraNegocioException exception = assertThrows(RegraNegocioException.class, () -> carrinhoCompra.removerProduto(produtoNovo));
-            assertEquals(String.format("O produto com o ID %d não está presente na lista de itens.", produtoNovo.getId()), exception.getMessage());
+            assertEquals(String.format(MSG_PRODUTO_NAO_ENCONTRADO, produtoNovo.getId()), exception.getMessage());
         }
 
         @Test
@@ -127,7 +131,7 @@ class CarrinhoCompraTest {
         @DisplayName("Dado produto nulo ao aumentar sua quantidade no carrinho de compras, Então deve retornar uma excessão")
         void produtoNuloDeveRetornarExcessao() {
             RegraNegocioException exception = assertThrows(RegraNegocioException.class, () -> carrinhoCompra.aumentarQuantidadeProduto(null));
-            assertEquals("Produto não pode ser nulo", exception.getMessage());
+            assertEquals(MSG_PRODUTO_NULO, exception.getMessage());
         }
 
         @Test
@@ -135,7 +139,7 @@ class CarrinhoCompraTest {
         void produtoNaoExistenteRetornarExcesao() {
             Produto produtoNovo = new Produto(2L, "Teclado", "Teclado mecânido com Led", new BigDecimal(200));
             RegraNegocioException exception = assertThrows(RegraNegocioException.class, () -> carrinhoCompra.aumentarQuantidadeProduto(produtoNovo));
-            assertEquals(String.format("O produto com o ID %d não está presente na lista de itens.", produtoNovo.getId()), exception.getMessage());
+            assertEquals(String.format(MSG_PRODUTO_NAO_ENCONTRADO, produtoNovo.getId()), exception.getMessage());
         }
 
         @Test
@@ -167,7 +171,7 @@ class CarrinhoCompraTest {
         @DisplayName("Dado produto nulo ao diminuir sua quantidade no carrinho de compras, Então deve retornar uma excessão")
         void produtoNuloDeveRetornarExcessao() {
             RegraNegocioException exception = assertThrows(RegraNegocioException.class, () -> carrinhoCompra.diminuirQuantidadeProduto(null));
-            assertEquals("Produto não pode ser nulo", exception.getMessage());
+            assertEquals(MSG_PRODUTO_NULO, exception.getMessage());
         }
 
         @Test
@@ -175,7 +179,7 @@ class CarrinhoCompraTest {
         void produtoNaoExistenteRetornarExcesao() {
             Produto produtoNovo = new Produto(2L, "Teclado", "Teclado mecânido com Led", new BigDecimal(200));
             RegraNegocioException exception = assertThrows(RegraNegocioException.class, () -> carrinhoCompra.diminuirQuantidadeProduto(produtoNovo));
-            assertEquals(String.format("O produto com o ID %d não está presente na lista de itens.", produtoNovo.getId()), exception.getMessage());
+            assertEquals(String.format(MSG_PRODUTO_NAO_ENCONTRADO, produtoNovo.getId()), exception.getMessage());
         }
 
         @Test
