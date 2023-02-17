@@ -79,8 +79,9 @@ public class CarrinhoCompra {
 	public void diminuirQuantidadeProduto(Produto produto) {
 		verificaProdutoNulo(produto);
 		verificaSeProdutoExiste(produto);
-		itens.stream().filter(prod -> prod.equals(produto))
-				.forEach(prod -> prod.subtrairQuantidade(1));
+		itens.stream()
+				.filter(item -> item.getProduto().equals(produto))
+				.forEach(item -> item.subtrairQuantidade(1));
 	}
 
 	// Implementar soma do valor total de todos itens
