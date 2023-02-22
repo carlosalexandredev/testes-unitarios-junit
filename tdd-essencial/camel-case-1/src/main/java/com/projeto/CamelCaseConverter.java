@@ -1,4 +1,4 @@
-package org.example;
+package com.projeto;
 
 public class CamelCaseConverter {
     public String converter(String nome) {
