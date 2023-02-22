@@ -3,7 +3,7 @@
 [![Linkedin Badge](https://img.shields.io/badge/-Carlos%20Alexandre-002E74?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/carlosalexandredev/)](https://www.linkedin.com/in/carlosalexandredev/)
 [![Gmail Badge](https://img.shields.io/badge/-carlosalexandredev.contato@gmail.com-002E74?style=flat-square&logo=Gmail&logoColor=white&link=mailto:carlosalexandredev.contato@gmail.com)](mailto:carlosalexandredev.contato@gmail.com)
 
-## Pirâmide de  Teste
+## Pirâmide de Teste
 
 A Pirâmide de Teste é uma representação visual que ilustra a proporção recomendada entre os diferentes tipos de testes
 que devem ser usados em um projeto de software. A base da pirâmide é formada por testes automatizados de unidade, que
@@ -55,6 +55,36 @@ funcionalidades que não são realmente valiosas para o negócio ou para os usu�
 No Java, a implementação do padrão de nomenclatura BDD pode ser realizada usando frameworks de teste BDD, como o
 JBehave, Cucumber ou Spek. Esses frameworks permitem escrever casos de teste BDD em linguagem natural e depois mapear
 esses casos de teste para implementações em Java.
+
+## Tipos de testes de software
+
+Existem vários tipos de testes de software, e eles podem ser classificados de diversas maneiras, dependendo do critério
+utilizado. Aqui estão alguns tipos comuns:
+
+Testes de unidade: verificam a funcionalidade individual de cada parte do código (módulos, funções, classes, etc.),
+geralmente realizados pelos desenvolvedores.
+
+Testes de integração: verificam a interação entre diferentes partes do sistema, para garantir que elas trabalhem juntas
+de maneira adequada.
+
+Testes de sistema: verificam se o sistema como um todo atende aos requisitos e especificações do cliente.
+
+Testes de aceitação: verificam se o sistema está pronto para ser entregue ao cliente, validando se atende às
+expectativas e requisitos especificados.
+
+Testes de regressão: verificam se mudanças realizadas em um sistema não causaram efeitos colaterais em funcionalidades
+existentes.
+
+Testes de desempenho: verificam a capacidade do sistema de lidar com grandes volumes de dados ou usuários, testando sua
+escalabilidade e eficiência.
+
+Testes de segurança: verificam a proteção do sistema contra possíveis ameaças de invasões ou ataques.
+
+Testes exploratórios: testes que são realizados sem um roteiro pré-definido, a fim de descobrir possíveis falhas ou
+comportamentos inesperados no sistema.
+
+
+___
 
 ## JUnit
 
