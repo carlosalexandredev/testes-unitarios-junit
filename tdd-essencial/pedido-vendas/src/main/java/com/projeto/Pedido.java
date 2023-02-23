@@ -1,9 +1,20 @@
 package com.projeto;
 
+import com.projeto.desconto.CalculadoraFaixaDesconto;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.projeto.TaxaDesconto.*;
+import static java.lang.Integer.MAX_VALUE;
+
 public class Pedido {
+
+    private CalculadoraFaixaDesconto calculadoraFaixaDesconto;
+
+    public Pedido(CalculadoraFaixaDesconto calculadoraFaixaDesconto) {
+        this.calculadoraFaixaDesconto = calculadoraFaixaDesconto;
+    }
 
     private List<Item> itens = new ArrayList<>();
 
@@ -12,20 +23,13 @@ public class Pedido {
     }
 
     public ResumoPedido resumo(){
-        double valorTotal = itens.stream().mapToDouble(item -> item.getValor() * item.getQuantidade()).sum();
-        double desconto = 0;
-        if(isBetween(valorTotal, 300, 800)){
-            desconto = (valorTotal * 0.04);
-        } else if (isBetween(valorTotal, 800, 1000)) {
-            desconto = (valorTotal * 0.06);
-        }else if (isBetween(valorTotal, 1000, Integer.MAX_VALUE)){
-            desconto = (valorTotal * 0.08);
-        }
+        double valorTotalPedido = itens.stream().mapToDouble(item -> item.getValor() * item.getQuantidade()).sum();
+        double valorTotalDesconto = calculadoraFaixaDesconto.desconto(valorTotalPedido);
 
-        return new ResumoPedido(valorTotal, desconto);
+        return new ResumoPedido(valorTotalPedido, valorTotalDesconto);
     }
 
-    private boolean isBetween(double valorTotal, int minimo, int maximo) {
+    private boolean isBetween(double valorTotal, double minimo, double maximo) {
         return valorTotal > minimo && valorTotal <= maximo;
     }
 }

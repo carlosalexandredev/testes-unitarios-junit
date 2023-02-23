@@ -1,65 +1,74 @@
 package com.projeto;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.projeto.desconto.*;
+import org.junit.jupiter.api.*;
 
+import static org.apache.commons.lang3.math.NumberUtils.DOUBLE_ZERO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestMethodOrder(MethodOrderer.MethodName.class)
 @DisplayName("Teste do Pedido")
 class PedidoTest {
 
     Pedido pedido;
 
+    CalculadoraFaixaDesconto calculadoraFaixaDesconto;
+
     @BeforeEach
     void init(){
-        pedido = new Pedido();
+        calculadoraFaixaDesconto =
+                new CalculadoraDescontoTerceiraFaixa(
+                        new CalculadoraDescontoSegundaFaixa(
+                                new CalculadoraDescontoPrimeiraFaixa(
+                                        new FaixaSemDesconto(null))));
+
+        pedido = new Pedido(calculadoraFaixaDesconto);
     }
 
     @Test
-    @DisplayName("Deve permitir adicionar um item no pedido")
+    @DisplayName("Dado um pedido em aberto, o sistema deve permitir a adição de um novo item ao pedido.")
     void devePermitirAdicionarItemPedido(){
         pedido.adicionarItem(new Item("Sabonete", 3.00, 10));
     }
 
     @Test
-    @DisplayName("Deve calcular valor total para pedido vazio")
+    @DisplayName("Dado um pedido vazio ao buscar valor total, Então deve retornar zero")
     void calcularTotalPedidoVazio(){
-        assertEquals(0.00, pedido.resumo().getValorTotal(), 0.0001);
+        assertEquals(DOUBLE_ZERO, pedido.resumo().getValorTotal(), 0.0001);
     }
 
     @Test
-    @DisplayName("Deve calcular valor total de desconto para pedido vazio")
+    @DisplayName("Dado um pedido vazio ao buscar valor total de desconto, Então deve retornar zero")
     void deveCalcularValorTotalEDescontoPedidoVazio(){
-        Pedido pedidoVazio = new Pedido();
-        assertEquals(0.00, pedidoVazio.resumo().getDesconto(), 0.0001);
+        Pedido pedidoVazio = new Pedido(calculadoraFaixaDesconto);
+        assertEquals(DOUBLE_ZERO, pedidoVazio.resumo().getDesconto(), 0.0001);
     }
 
     @Test
-    @DisplayName("Deve calcular resumo para um item sem desconto")
+    @DisplayName("Dado um pedido sem desconto, ao buscar o valor total de desconto, Então deve retornar zero.")
     void deveCalcularResumoparaItemSemDesconto(){
         pedido.adicionarItem(new Item("Sabonete", 5.00, 5));
-        assertResumoPedido(25.00, 0.00);
+        assertResumoPedido(25.00, DOUBLE_ZERO);
     }
 
     @Test
-    @DisplayName("Deve calcular resumo para dois itens sem desconto")
+    @DisplayName("Dado dois pedidos sem desconto, ao buscar o valor total de desconto, Então deve retornar zero.")
     void devecalcularResumoParaDoisItensSemDesconto(){
         pedido.adicionarItem(new Item("Sabonete", 3.00, 3));
         pedido.adicionarItem(new Item("Teclado", 7.00, 3));
 
-        assertResumoPedido(30.00, 0.00);
+        assertResumoPedido(30.00, DOUBLE_ZERO);
     }
 
     @Test
-    @DisplayName("Deve aplicar 4% desconto na para pedidos acima de R$300")
+    @DisplayName("Dado um pedido com valor total acima de R$300, ao aplicar o desconto de 4%, Então deve retornar o total de desconto.")
     void deveAplicarDescontoParaPedidosAcimaTrezentosReais(){
         pedido.adicionarItem(new Item("HeadSet", 180, 2));
         assertResumoPedido(360, 14.4);
     }
 
     @Test
-    @DisplayName("Deve aplicar 6% desconto na para pedidos acima de R$800")
+    @DisplayName("Dado um pedido com valor total acima de R$800, ao aplicar o desconto de 6%, Então deve retornar o total de desconto.")
     void deveAplicarDescontoParaPedidosAcimaOitocentosReais(){
         pedido.adicionarItem(new Item("Shampoo", 15.00, 30));
         pedido.adicionarItem(new Item("Óleo", 15.00, 30));
@@ -68,7 +77,7 @@ class PedidoTest {
     }
 
     @Test
-    @DisplayName("Deve aplicar 8% desconto na para pedidos acima de R$1000")
+    @DisplayName("Dado um pedido com valor total acima de R$1000, ao aplicar o desconto de 8%, Então deve retornar o total de desconto.")
     void deveAplicarDescontoParaPedidosAcimaMilReais(){
         pedido.adicionarItem(new Item("Creme", 15.00, 30));
         pedido.adicionarItem(new Item("Shampoo", 10.00, 30));
