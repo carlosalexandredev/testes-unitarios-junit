@@ -34,6 +34,33 @@ O princípio **FIRST** é um conjunto de boas práticas para escrever testes uni
 - **TIMELY:** os testes devem ser escritos ao mesmo tempo que o código é escrito, para que possam ser usados para
   validar as mudanças no código.
 
+## Tipos de testes de software
+
+Existem vários tipos de testes de software, e eles podem ser classificados de diversas maneiras, dependendo do critério
+utilizado. Aqui estão alguns tipos comuns:
+
+**Testes de unidade:** verificam a funcionalidade individual de cada parte do código (módulos, funções, classes, etc.),
+geralmente realizados pelos desenvolvedores.
+
+**Testes de integração:** verificam a interação entre diferentes partes do sistema, para garantir que elas trabalhem juntas
+de maneira adequada.
+
+**Testes de sistema:** verificam se o sistema como um todo atende aos requisitos e especificações do cliente.
+
+**Testes de aceitação:** verificam se o sistema está pronto para ser entregue ao cliente, validando se atende às
+expectativas e requisitos especificados.
+
+**Testes de regressão:** verificam se mudanças realizadas em um sistema não causaram efeitos colaterais em funcionalidades
+existentes.
+
+**Testes de desempenho:** verificam a capacidade do sistema de lidar com grandes volumes de dados ou usuários, testando sua
+escalabilidade e eficiência.
+
+**Testes de segurança:** verificam a proteção do sistema contra possíveis ameaças de invasões ou ataques.
+
+**Testes exploratórios:** testes que são realizados sem um roteiro pré-definido, a fim de descobrir possíveis falhas ou
+comportamentos inesperados no sistema.
+
 ## Behavior-Driven Development (BDD)
 
 BDD significa "Desenvolvimento Orientado a Comportamento" (Behavior-Driven Development, em inglês). É uma abordagem para
@@ -56,33 +83,20 @@ No Java, a implementação do padrão de nomenclatura BDD pode ser realizada usa
 JBehave, Cucumber ou Spek. Esses frameworks permitem escrever casos de teste BDD em linguagem natural e depois mapear
 esses casos de teste para implementações em Java.
 
-## Tipos de testes de software
+## Test Driven Development (TDD)
 
-Existem vários tipos de testes de software, e eles podem ser classificados de diversas maneiras, dependendo do critério
-utilizado. Aqui estão alguns tipos comuns:
+TDD (Test Driven Development), ou Desenvolvimento Orientado a Testes em português, é uma técnica de desenvolvimento de software que consiste em escrever testes automatizados antes de escrever o código que implementa a funcionalidade desejada.
 
-Testes de unidade: verificam a funcionalidade individual de cada parte do código (módulos, funções, classes, etc.),
-geralmente realizados pelos desenvolvedores.
+O ciclo do TDD é composto por três etapas:
 
-Testes de integração: verificam a interação entre diferentes partes do sistema, para garantir que elas trabalhem juntas
-de maneira adequada.
+Escrever um teste automatizado que descreva a funcionalidade que será implementada.
+Rodar o teste e verificá-lo falhar, já que a funcionalidade ainda não foi implementada.
+Escrever o código que implementa a funcionalidade e rodar novamente o teste para verificá-lo passar.
+O objetivo principal do TDD é garantir que o código escrito atenda aos requisitos definidos, além de ajudar a criar código limpo, de fácil manutenção e com poucos defeitos.
 
-Testes de sistema: verificam se o sistema como um todo atende aos requisitos e especificações do cliente.
+Ao escrever testes antes do código, o desenvolvedor é incentivado a pensar sobre as funcionalidades que precisa implementar e a garantir que elas sejam claras e bem definidas antes de começar a escrever o código. Isso ajuda a evitar problemas de design e ajuda o desenvolvedor a criar um código mais modular e testável.
 
-Testes de aceitação: verificam se o sistema está pronto para ser entregue ao cliente, validando se atende às
-expectativas e requisitos especificados.
-
-Testes de regressão: verificam se mudanças realizadas em um sistema não causaram efeitos colaterais em funcionalidades
-existentes.
-
-Testes de desempenho: verificam a capacidade do sistema de lidar com grandes volumes de dados ou usuários, testando sua
-escalabilidade e eficiência.
-
-Testes de segurança: verificam a proteção do sistema contra possíveis ameaças de invasões ou ataques.
-
-Testes exploratórios: testes que são realizados sem um roteiro pré-definido, a fim de descobrir possíveis falhas ou
-comportamentos inesperados no sistema.
-
+Porém, o TDD não é uma técnica que deve ser usada em todas as situações. Ele pode ser útil em projetos onde a qualidade do software é uma prioridade, mas pode não ser a melhor abordagem em projetos com prazos muito apertados ou onde o escopo do projeto ainda não está bem definido.
 
 ___
 
