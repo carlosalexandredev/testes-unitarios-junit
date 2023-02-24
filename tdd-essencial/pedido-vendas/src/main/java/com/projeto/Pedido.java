@@ -1,13 +1,12 @@
 package com.projeto;
 
 import com.projeto.desconto.CalculadoraFaixaDesconto;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.projeto.TaxaDesconto.*;
-import static java.lang.Integer.MAX_VALUE;
-
+@NoArgsConstructor
 public class Pedido {
 
     private CalculadoraFaixaDesconto calculadoraFaixaDesconto;
