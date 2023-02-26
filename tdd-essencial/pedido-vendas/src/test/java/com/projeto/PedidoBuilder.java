@@ -17,6 +17,7 @@ public class PedidoBuilder {
 
     public PedidoBuilder comItem(String descricao,double valorUnitario, int quantidade){
         instancia.adicionarItem(new Item(descricao, valorUnitario, quantidade));
+
         return this;
     }
 

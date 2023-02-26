@@ -1,9 +1,11 @@
 package com.projeto;
 
+import com.projeto.exception.QuantidadeItemInvalidaException;
 import org.junit.jupiter.api.*;
 
 import static org.apache.commons.lang3.math.NumberUtils.DOUBLE_ZERO;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @DisplayName("Teste do Pedido")
@@ -68,6 +70,12 @@ class PedidoTest {
               .comItem("Óleo", 15.00, 30);
 
         assertResumoPedido(1200.00, 96.00);
+    }
+
+    @Test
+    @DisplayName("Dado um pedido com quantidade menor que zero, Então deve retornar uma excessão")
+    void deveRetornarExcessaoPedidosQuantidadeMenorQueZero(){
+        assertThrows(QuantidadeItemInvalidaException.class, () ->  pedido.comItem("Livro", 40.00, -2));
     }
 
     void assertResumoPedido(double total, double desconto) {
