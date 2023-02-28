@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestMethodOrder(MethodOrderer.MethodName.class)
-@DisplayName("Teste do Pedido")
+@DisplayName("Testes do Pedido")
 class PedidoTest {
 
     PedidoBuilder pedido;
