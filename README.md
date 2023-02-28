@@ -21,7 +21,7 @@ A idéia principal da pirâmide é que, quanto mais baixo na pirâmide, mais tes
 menos testes são necessários. Isso ajuda a equilibrar a cobertura dos testes com o custo e a complexidade de escrever e
 executar esses testes.
 
-![piramide.webp](/piramide.webp)
+![piramide.webp](/readme-resources/piramide.webp)
 
 ## FIRST
 
@@ -130,7 +130,7 @@ na cobertura de testes, o que pode ser útil na identificação de bugs e no aum
 JaCoCo também pode ser usado como uma medida de qualidade do software, já que altos níveis de cobertura de testes
 geralmente indicam um software de alta qualidade.
 
-![JACOCO.png](/JACOCO.png)
+![JACOCO.png](/readme-resources/JACOCO.png)
 
 **Documentação:** [JaCoCo](https://www.jacoco.org/jacoco/trunk/index.html)
 
