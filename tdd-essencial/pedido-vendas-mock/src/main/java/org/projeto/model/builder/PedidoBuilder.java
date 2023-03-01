@@ -15,4 +15,13 @@ public class PedidoBuilder {
         instancia.setCliente(cliente);
         return this;
     }
+
+    public PedidoBuilder comValor(double valor) {
+        instancia.setValor(valor);
+        return this;
+    }
+
+    public Pedido construir() {
+        return instancia;
+    }
 }
