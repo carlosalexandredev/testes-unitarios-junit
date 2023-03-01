@@ -12,6 +12,9 @@ import org.projeto.model.builder.PedidoBuilder;
 import org.projeto.repository.Pedidos;
 import org.projeto.sms.NotificadorSms;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Testes do Pedido")
@@ -29,7 +32,8 @@ class PedidoServiceTest {
     @BeforeEach
     void init(){
         MockitoAnnotations.initMocks(this);
-        pedidoService = new PedidoService(pedidos, notificadorEmail, notificadorSms);
+        List<AcaoLancamentoPedido> acoesPedido = Arrays.asList(pedidos, notificadorEmail, notificadorSms);
+        pedidoService = new PedidoService(acoesPedido);
         pedido = new PedidoBuilder()
                 .comValor(100)
                 .para("Pedro", "pedro-goiva@email.com", "(61) 9547-6571")
@@ -47,21 +51,20 @@ class PedidoServiceTest {
     @DisplayName("Dado um novo pedido, então deve salva no banco de dados.")
     void deveSalvarPedidosBancoDados(){
         pedidoService.lancar(pedido);
-        Mockito.verify(pedidos).guardar(pedido);
+        Mockito.verify(pedidos).executar(pedido);
     }
 
     @Test
     @DisplayName("Dado um novo pedido, então deve enviar por E-mail.")
     void deveEnviarEmail(){
         pedidoService.lancar(pedido);
-        Mockito.verify(notificadorEmail).enviar(pedido);
+        Mockito.verify(notificadorEmail).executar(pedido);
     }
 
     @Test
     @DisplayName("Dado um novo pedido, então deve enviar por SMS.")
     void deveNotificarSms(){
         pedidoService.lancar(pedido);
-        Mockito.verify(notificadorSms).notificar(pedido);
+        Mockito.verify(notificadorSms).executar(pedido);
     }
-
 }

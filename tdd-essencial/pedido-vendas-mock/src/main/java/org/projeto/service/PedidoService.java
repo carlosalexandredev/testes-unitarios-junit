@@ -6,12 +6,12 @@ import org.projeto.model.Pedido;
 import org.projeto.repository.Pedidos;
 import org.projeto.sms.NotificadorSms;
 
+import java.util.List;
+
 @AllArgsConstructor
 public class PedidoService {
     public static final double DEZ_PORCENTO = 0.10;
-    private Pedidos pedidos;
-    private NotificadorEmail notificadorEmail;
-    private NotificadorSms notificadorSms;
+    List<AcaoLancamentoPedido> acoesPedidos;
 
     public double lancar(Pedido pedido) {
         double imposto = calculaImposto(pedido);
@@ -20,9 +20,7 @@ public class PedidoService {
     }
 
     private void enviaNotificoes(Pedido pedido) {
-        pedidos.guardar(pedido);
-        notificadorEmail.enviar(pedido);
-        notificadorSms.notificar(pedido);
+        acoesPedidos.stream().forEach(a -> a.executar(pedido));
     }
 
     private static double calculaImposto(Pedido pedido) {
