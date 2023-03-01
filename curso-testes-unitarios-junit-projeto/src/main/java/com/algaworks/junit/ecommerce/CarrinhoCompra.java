@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import static java.math.BigDecimal.ZERO;
+
 public class CarrinhoCompra {
 
 	private final Cliente cliente;
@@ -86,7 +88,7 @@ public class CarrinhoCompra {
 
 	// Implementar soma do valor total de todos itens
 	public BigDecimal getValorTotal() {
-		return itens.stream().map(ItemCarrinhoCompra::getValorTotal).reduce(BigDecimal.ZERO, BigDecimal::add);
+		return itens.stream().map(ItemCarrinhoCompra::getValorTotal).reduce(ZERO, BigDecimal::add);
 	}
 
 	// Retorna quantidade total de itens no carrinho
