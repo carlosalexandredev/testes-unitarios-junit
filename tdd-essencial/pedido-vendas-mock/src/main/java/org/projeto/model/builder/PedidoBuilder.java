@@ -2,6 +2,7 @@ package org.projeto.model.builder;
 
 import org.projeto.model.Cliente;
 import org.projeto.model.Pedido;
+import org.projeto.service.StatusPedido;
 
 public class PedidoBuilder {
     private Pedido instancia;
@@ -18,6 +19,11 @@ public class PedidoBuilder {
 
     public PedidoBuilder comValor(double valor) {
         instancia.setValor(valor);
+        return this;
+    }
+
+    public PedidoBuilder comStatus(StatusPedido status){
+        instancia.setStatus(status);
         return this;
     }
 

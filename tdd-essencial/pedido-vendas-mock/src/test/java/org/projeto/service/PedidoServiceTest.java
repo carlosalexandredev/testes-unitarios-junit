@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.projeto.email.NotificadorEmail;
+import org.projeto.exception.StatusPedidoInvalidoException;
 import org.projeto.model.Pedido;
 import org.projeto.model.builder.PedidoBuilder;
 import org.projeto.repository.Pedidos;
@@ -16,6 +17,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+import static org.projeto.service.StatusPedido.PAGO;
+import static org.projeto.service.StatusPedido.PENDENTE;
 
 @DisplayName("Testes do Pedido")
 class PedidoServiceTest {
@@ -31,13 +37,13 @@ class PedidoServiceTest {
 
     @BeforeEach
     void init(){
-        MockitoAnnotations.initMocks(this);
+        initMocks(this);
         List<AcaoLancamentoPedido> acoesPedido = Arrays.asList(pedidos, notificadorEmail, notificadorSms);
-        pedidoService = new PedidoService(acoesPedido);
         pedido = new PedidoBuilder()
                 .comValor(100)
                 .para("Pedro", "pedro-goiva@email.com", "(61) 9547-6571")
                 .construir();
+        pedidoService = new PedidoService(pedidos, acoesPedido);
     }
 
     @Test
@@ -51,20 +57,47 @@ class PedidoServiceTest {
     @DisplayName("Dado um novo pedido, então deve salva no banco de dados.")
     void deveSalvarPedidosBancoDados(){
         pedidoService.lancar(pedido);
-        Mockito.verify(pedidos).executar(pedido);
+        verify(pedidos).executar(pedido);
     }
 
     @Test
     @DisplayName("Dado um novo pedido, então deve enviar por E-mail.")
     void deveEnviarEmail(){
         pedidoService.lancar(pedido);
-        Mockito.verify(notificadorEmail).executar(pedido);
+        verify(notificadorEmail).executar(pedido);
     }
 
     @Test
     @DisplayName("Dado um novo pedido, então deve enviar por SMS.")
     void deveNotificarSms(){
         pedidoService.lancar(pedido);
-        Mockito.verify(notificadorSms).executar(pedido);
+        verify(notificadorSms).executar(pedido);
+    }
+
+    @Test
+    @DisplayName("Ao pagar um pedido com estatus pendente, o status deve ser atualizado para pago.")
+    void devePagarPedidoPendente() throws StatusPedidoInvalidoException {
+        Long codigoPedido = 135L;
+        Pedido pedidoPendente = new PedidoBuilder()
+                .comStatus(PENDENTE)
+                .construir();
+
+        when(pedidos.buscarPedidoPeloCodigo(codigoPedido)).thenReturn(pedidoPendente);
+        Pedido pedidoPago = pedidoService.pagar(codigoPedido);
+
+        assertEquals(PAGO, pedidoPago.getStatus());
+    }
+
+    @Test
+    @DisplayName("Ao pagar um pedido com status pago, então deve lançar uma excessão.")
+    void deveNegarPagamento() throws StatusPedidoInvalidoException {
+        Long codigoPedido = 135L;
+        Pedido pedidoPendente = new PedidoBuilder()
+                .comStatus(PAGO)
+                .construir();
+
+        when(pedidos.buscarPedidoPeloCodigo(codigoPedido)).thenReturn(pedidoPendente);
+
+        assertThrows(StatusPedidoInvalidoException.class, () -> pedidoService.pagar(codigoPedido));
     }
 }
